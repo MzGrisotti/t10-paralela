@@ -1,0 +1,59 @@
+#include <complex>
+#include <iostream>
+#include <sys/time.h>
+
+using namespace std;
+
+void make_fractal(char **mat, int max_n, int max_row, int max_column){
+
+   for(int r = 0; r < max_row; ++r){
+		for(int c = 0; c < max_column; ++c){
+			complex<float> z;
+			int n = 0;
+			while(abs(z) < 2 && ++n < max_n)
+				z = pow(z, 2) + decltype(z)(
+					(float)c * 2 / max_column - 1.5,
+					(float)r * 2 / max_row - 1
+				);
+			mat[r][c]=(n == max_n ? '#' : '.');
+		}
+	}
+
+}
+
+int main(int argc, char *argv[]){
+	int max_row, max_column, max_n, print;
+
+	if (argc != 5){
+      std::cout << "Faltam argumentos, devem ser no formato: ./executavel max_row max_column max_n" << std::endl;
+      exit(-1);
+	}
+	max_row = atoi(argv[1]);
+	max_column = atoi(argv[2]);
+	max_n = atoi(argv[3]);
+	print = atoi(argv[4]);
+
+	char **mat = (char**)malloc(sizeof(char*)*max_row);
+
+	for (int i=0; i<max_row;i++)
+		mat[i]=(char*)malloc(sizeof(char)*max_column);
+
+   // start time
+   timeval start, end;
+   gettimeofday(&start, NULL);
+
+	make_fractal(mat, max_n, max_row, max_column);
+
+	gettimeofday(&end, NULL);
+   double runtime = end.tv_sec + end.tv_usec / 1000000.0 - start.tv_sec - start.tv_usec / 1000000.0;
+   std::cout << "compute time: " << runtime << " s\n";
+   if(print){
+      for(int r = 0; r < max_row; ++r){
+         for(int c = 0; c < max_column; ++c)
+            std::cout << mat[r][c];
+         cout << '\n';
+      }
+   }
+}
+
+
