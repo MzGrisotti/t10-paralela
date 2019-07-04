@@ -154,9 +154,9 @@ void render(){
 int main(void)
 {
 
-   Size = 100;
-   width = 2000;
-   OffSet = 3000;
+   Size = 10;
+   width = 512;
+   OffSet = 800;
    int frames = 1;
    double spacing_factor = 40;
 
