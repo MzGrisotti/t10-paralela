@@ -11,10 +11,13 @@
 
 #define PI 3.1415
 
-Cube_Unity ***Cube;
-Cube_Unity ***Cube_Perspective;
+//Cube_Unity ***Cube;
+Cube_Unity *Cube;
+//Cube_Unity ***Cube_Perspective;
+Cube_Unity *Cube_Perspective;
 int Size;
 int width;
+int OffSet;
 
 //funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis
 //globais que podem ser setadas pelo metodo keyboard()
@@ -24,7 +27,7 @@ void OffSet_Z(double offset){
    for(auto i = 0; i < Size; i++){
       for(auto j = 0; j < Size; j++){
          for(auto k = 0; k < Size; k++){
-            Cube[i][j][k].z += offset;
+            Cube[i + Size * (j + Size * k)].z += offset;
          }
       }
    }
@@ -39,9 +42,10 @@ void Transform_3D_2D(){
    for(auto i = 0; i < Size; i++){
       for(auto j = 0; j < Size; j++){
          for(auto k = 0; k < Size; k++){
-            new_x = Cube[i][j][k].x*dist_to_screen/Cube[i][j][k].z+width/2;
-            new_y = Cube[i][j][k].y*dist_to_screen/Cube[i][j][k].z+width/2;
-            Cube_Perspective[i][j][k].set_pos(new_x, new_y, 0, Cube[i][j][k].cor);
+            new_x = Cube[i + Size * (j + Size * k)].x*dist_to_screen/Cube[i + Size * (j + Size * k)].z+width/2;
+            new_y = Cube[i + Size * (j + Size * k)].y*dist_to_screen/Cube[i + Size * (j + Size * k)].z+width/2;
+            //Cube_Perspective[i][j][k].set_pos(new_x, new_y, 0, Cube[i + Size * (j + Size * k)].cor);
+            Cube_Perspective[i + Size * (j + Size * k)].set_pos(new_x, new_y, 0, Cube[i + Size * (j + Size * k)].cor);
          }
       }
    }
@@ -63,13 +67,13 @@ void Rotate_x(double angulo){
       for(auto j = 0; j < Size; j++){
          for(auto k = 0; k < Size; k++){
 
-            new_x = Cube[i][j][k].x * matrix_x[0][0] + Cube[i][j][k].y * matrix_x[0][1] + Cube[i][j][k].z * matrix_x[0][2];
-            new_y = Cube[i][j][k].x * matrix_x[1][0] + Cube[i][j][k].y * matrix_x[1][1] + Cube[i][j][k].z * matrix_x[1][2];
-            new_z = Cube[i][j][k].x * matrix_x[2][0] + Cube[i][j][k].y * matrix_x[2][1] + Cube[i][j][k].z * matrix_x[2][2];
+            new_x = Cube[i + Size * (j + Size * k)].x * matrix_x[0][0] + Cube[i + Size * (j + Size * k)].y * matrix_x[0][1] + Cube[i + Size * (j + Size * k)].z * matrix_x[0][2];
+            new_y = Cube[i + Size * (j + Size * k)].x * matrix_x[1][0] + Cube[i + Size * (j + Size * k)].y * matrix_x[1][1] + Cube[i + Size * (j + Size * k)].z * matrix_x[1][2];
+            new_z = Cube[i + Size * (j + Size * k)].x * matrix_x[2][0] + Cube[i + Size * (j + Size * k)].y * matrix_x[2][1] + Cube[i + Size * (j + Size * k)].z * matrix_x[2][2];
 
-            Cube[i][j][k].x = new_x;
-            Cube[i][j][k].y = new_y;
-            Cube[i][j][k].z = new_z;
+            Cube[i + Size * (j + Size * k)].x = new_x;
+            Cube[i + Size * (j + Size * k)].y = new_y;
+            Cube[i + Size * (j + Size * k)].z = new_z;
 
          }
       }
@@ -92,13 +96,13 @@ void Rotate_y(double angulo){
       for(auto j = 0; j < Size; j++){
          for(auto k = 0; k < Size; k++){
 
-            new_x = Cube[i][j][k].x * matrix_x[0][0] + Cube[i][j][k].y * matrix_x[0][1] + Cube[i][j][k].z * matrix_x[0][2];
-            new_y = Cube[i][j][k].x * matrix_x[1][0] + Cube[i][j][k].y * matrix_x[1][1] + Cube[i][j][k].z * matrix_x[1][2];
-            new_z = Cube[i][j][k].x * matrix_x[2][0] + Cube[i][j][k].y * matrix_x[2][1] + Cube[i][j][k].z * matrix_x[2][2];
+            new_x = Cube[i + Size * (j + Size * k)].x * matrix_x[0][0] + Cube[i + Size * (j + Size * k)].y * matrix_x[0][1] + Cube[i + Size * (j + Size * k)].z * matrix_x[0][2];
+            new_y = Cube[i + Size * (j + Size * k)].x * matrix_x[1][0] + Cube[i + Size * (j + Size * k)].y * matrix_x[1][1] + Cube[i + Size * (j + Size * k)].z * matrix_x[1][2];
+            new_z = Cube[i + Size * (j + Size * k)].x * matrix_x[2][0] + Cube[i + Size * (j + Size * k)].y * matrix_x[2][1] + Cube[i + Size * (j + Size * k)].z * matrix_x[2][2];
 
-            Cube[i][j][k].x = new_x;
-            Cube[i][j][k].y = new_y;
-            Cube[i][j][k].z = new_z;
+            Cube[i + Size * (j + Size * k)].x = new_x;
+            Cube[i + Size * (j + Size * k)].y = new_y;
+            Cube[i + Size * (j + Size * k)].z = new_z;
 
          }
       }
@@ -121,13 +125,13 @@ void Rotate_z(double angulo){
       for(auto j = 0; j < Size; j++){
          for(auto k = 0; k < Size; k++){
 
-            new_x = Cube[i][j][k].x * matrix_x[0][0] + Cube[i][j][k].y * matrix_x[0][1] + Cube[i][j][k].z * matrix_x[0][2];
-            new_y = Cube[i][j][k].x * matrix_x[1][0] + Cube[i][j][k].y * matrix_x[1][1] + Cube[i][j][k].z * matrix_x[1][2];
-            new_z = Cube[i][j][k].x * matrix_x[2][0] + Cube[i][j][k].y * matrix_x[2][1] + Cube[i][j][k].z * matrix_x[2][2];
+            new_x = Cube[i + Size * (j + Size * k)].x * matrix_x[0][0] + Cube[i + Size * (j + Size * k)].y * matrix_x[0][1] + Cube[i + Size * (j + Size * k)].z * matrix_x[0][2];
+            new_y = Cube[i + Size * (j + Size * k)].x * matrix_x[1][0] + Cube[i + Size * (j + Size * k)].y * matrix_x[1][1] + Cube[i + Size * (j + Size * k)].z * matrix_x[1][2];
+            new_z = Cube[i + Size * (j + Size * k)].x * matrix_x[2][0] + Cube[i + Size * (j + Size * k)].y * matrix_x[2][1] + Cube[i + Size * (j + Size * k)].z * matrix_x[2][2];
 
-            Cube[i][j][k].x = new_x;
-            Cube[i][j][k].y = new_y;
-            Cube[i][j][k].z = new_z;
+            Cube[i + Size * (j + Size * k)].x = new_x;
+            Cube[i + Size * (j + Size * k)].y = new_y;
+            Cube[i + Size * (j + Size * k)].z = new_z;
 
          }
       }
@@ -140,9 +144,9 @@ void render(){
    Rotate_z(angulo);
    Rotate_y(angulo);
    Rotate_x(angulo);
-   OffSet_Z(800);
+   OffSet_Z(OffSet);
    Transform_3D_2D();
-   OffSet_Z(-800);
+   OffSet_Z(-OffSet);
 
 }
 
@@ -150,8 +154,9 @@ void render(){
 int main(void)
 {
 
-   Size = 10;
-   width = 512;
+   Size = 100;
+   width = 2000;
+   OffSet = 3000;
    int frames = 1;
    double spacing_factor = 40;
 
@@ -162,16 +167,18 @@ int main(void)
    inix = iniy = iniz = atualx = atualy = atualz = -double(Size)/2 * spacing_factor;
    spacing = -inix*2 / double(Size);
 
-   Cube = new Cube_Unity**[Size];
-   Cube_Perspective = new Cube_Unity**[Size];
+   //Cube = new Cube_Unity**[Size];
+   Cube = new Cube_Unity[Size*Size*Size];
+   Cube_Perspective = new Cube_Unity[Size*Size*Size];
+   //Cube_Perspective = new Cube_Unity**[Size];
    for(auto i = 0; i < Size; i++){
-       Cube[i] = new Cube_Unity*[Size];
-       Cube_Perspective[i] = new Cube_Unity*[Size];
+       //Cube[i] = new Cube_Unity*[Size];
+       //Cube_Perspective[i] = new Cube_Unity*[Size];
        for(auto j = 0; j < Size; j++){
-           Cube[i][j] = new Cube_Unity[Size];
-           Cube_Perspective[i][j] = new Cube_Unity[Size];
+           //Cube[i][j] = new Cube_Unity[Size];
+           //Cube_Perspective[i][j] = new Cube_Unity[Size];
            for(auto k = 0; k < Size; k++){
-              Cube[i][j][k].set_pos(atualx,atualy,atualz, 255);
+              Cube[i + Size * (j + Size * k)].set_pos(atualx,atualy,atualz, 255);
               atualz += spacing;
            }
            atualz = iniz;
@@ -199,8 +206,10 @@ int main(void)
       for(auto i = 0; i < Size; i++){
          for(auto j = 0; j < Size; j++){
             for(auto k = 0; k < Size; k++){
-               int row = (int)Cube_Perspective[i][j][k].x;
-               int col = (int)Cube_Perspective[i][j][k].y;
+               //int row = (int)Cube_Perspective[i][j][k].x;
+               //int col = (int)Cube_Perspective[i][j][k].y;
+               int row = (int)Cube_Perspective[i + Size * (j + Size * k)].x;
+               int col = (int)Cube_Perspective[i + Size * (j + Size * k)].y;
                if(row >= 0 && row < width && col >= 0 && col < width){
                   unsigned char color = (unsigned char) 0;
                   pic[frame * width * width + row * width + col] = (unsigned char) color;
