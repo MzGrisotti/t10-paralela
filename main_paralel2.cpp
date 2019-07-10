@@ -159,7 +159,7 @@ void render(){
                            -sin(angulo), 0, cos(angulo), 0,
                                       0, 0,           0, 1};
 
-   double new_x, new_y, new_z;
+   //double new_x, new_y, new_z;
 
    for(auto i = 0; i < Size; i++){
       for(auto j = 0; j < Size; j++){
@@ -214,7 +214,7 @@ void render(){
    //Transform_3D_2D();
    
    double dist_to_screen = 300;
-   double new_x, new_y;
+   //double new_x, new_y;
 
    for(auto i = 0; i < Size; i++){
       for(auto j = 0; j < Size; j++){
