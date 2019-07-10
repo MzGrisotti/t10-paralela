@@ -4,6 +4,8 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <iostream>
+#include <sys/time.h>
 
 
 #include "Cube_Unity.h"
@@ -154,6 +156,10 @@ void render(){
 int main(void)
 {
 
+	// start time
+	timeval start, end;
+	gettimeofday(&start, NULL);
+
    Size = 100;
    width = 2000;
    OffSet = 3000;
@@ -218,6 +224,10 @@ int main(void)
          }
       }
    }
+   
+   	gettimeofday(&end, NULL);
+	double runtime = end.tv_sec + end.tv_usec / 1000000.0 - start.tv_sec - start.tv_usec / 1000000.0;
+	//std::cout << "compute time: " << runtime << " s\n";
 
     for (int frame = 0; frame < frames; frame++) {
       char name[32];
