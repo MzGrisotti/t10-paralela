@@ -213,8 +213,8 @@ int main(void)
    }
    
    gettimeofday(&end, NULL);
-	double runtime = end.tv_sec + end.tv_usec / 1000000.0 - start.tv_sec - start.tv_usec / 1000000.0;
-	//std::cout << "compute time: " << runtime << " s\n";
+   double runtime = end.tv_sec + end.tv_usec / 1000000.0 - start.tv_sec - start.tv_usec / 1000000.0;
+   std::cout << "compute time: " << runtime << " s\n";
 
     for (int frame = 0; frame < frames; frame++) {
       char name[32];
