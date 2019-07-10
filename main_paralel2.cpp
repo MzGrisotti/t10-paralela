@@ -142,7 +142,7 @@ void Rotate_z(double angulo){
 void render(){
    double startAngulo = 1;
    //Rotate_z(angulo);
-   double offset = angulo;
+   double offset = startAngulo;
 	for(auto i = 0; i < Size; i++){
       for(auto j = 0; j < Size; j++){
          for(auto k = 0; k < Size; k++){
@@ -180,20 +180,20 @@ void render(){
    //Rotate_x(angulo);
 	angulo = startAngulo * PI/180;
 
-   double matrix_x[4][4] = {1,           0,            0, 0,
+   double matrix_y[4][4] = {1,           0,            0, 0,
                            0, cos(angulo), -sin(angulo), 0,
                            0, sin(angulo),  cos(angulo), 0,
                            0,           0,            0, 1};
 
-   double new_x, new_y, new_z;
+   //double new_x, new_y, new_z;
 
    for(auto i = 0; i < Size; i++){
       for(auto j = 0; j < Size; j++){
          for(auto k = 0; k < Size; k++){
 
-            new_x = Cube[i + Size * (j + Size * k)].x * matrix_x[0][0] + Cube[i + Size * (j + Size * k)].y * matrix_x[0][1] + Cube[i + Size * (j + Size * k)].z * matrix_x[0][2];
-            new_y = Cube[i + Size * (j + Size * k)].x * matrix_x[1][0] + Cube[i + Size * (j + Size * k)].y * matrix_x[1][1] + Cube[i + Size * (j + Size * k)].z * matrix_x[1][2];
-            new_z = Cube[i + Size * (j + Size * k)].x * matrix_x[2][0] + Cube[i + Size * (j + Size * k)].y * matrix_x[2][1] + Cube[i + Size * (j + Size * k)].z * matrix_x[2][2];
+            new_x = Cube[i + Size * (j + Size * k)].x * matrix_y[0][0] + Cube[i + Size * (j + Size * k)].y * matrix_y[0][1] + Cube[i + Size * (j + Size * k)].z * matrix_y[0][2];
+            new_y = Cube[i + Size * (j + Size * k)].x * matrix_y[1][0] + Cube[i + Size * (j + Size * k)].y * matrix_y[1][1] + Cube[i + Size * (j + Size * k)].z * matrix_y[1][2];
+            new_z = Cube[i + Size * (j + Size * k)].x * matrix_y[2][0] + Cube[i + Size * (j + Size * k)].y * matrix_y[2][1] + Cube[i + Size * (j + Size * k)].z * matrix_y[2][2];
 
             Cube[i + Size * (j + Size * k)].x = new_x;
             Cube[i + Size * (j + Size * k)].y = new_y;
@@ -203,7 +203,7 @@ void render(){
       }
    }
    //OffSet_Z(OffSet);
-   offset = OffSet
+   offset = OffSet;
   for(auto i = 0; i < Size; i++){
       for(auto j = 0; j < Size; j++){
          for(auto k = 0; k < Size; k++){
