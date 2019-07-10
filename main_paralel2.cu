@@ -4,7 +4,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <iostream>
 
 #include "Cube_Unity.h"
 #include "bmp.h"
@@ -137,7 +137,7 @@ void Rotate_z(double angulo){
 }
 */
 
-void render(Cube_Unity *Cube, Cube_Unity *Cube_Perspective){
+__global__ void render(Cube_Unity *Cube, Cube_Unity *Cube_Perspective){
 	int Size = 100;
 	int width = 2000;
 	int OffSet = 3000;
@@ -146,7 +146,7 @@ void render(Cube_Unity *Cube, Cube_Unity *Cube_Perspective){
    double offset = startAngulo;
    
    auto k = blockIdx.x;
-   int i = int(floor(threadIdx.x/10));
+   int i = int(threadIdx.x/10);
    
 	//for(auto i = 0; i < Size; i++){
       //for(auto j = 0; j < Size; j++){
@@ -231,7 +231,11 @@ void render(Cube_Unity *Cube, Cube_Unity *Cube_Perspective){
             new_x = Cube[i + Size * (j + Size * k)].x*dist_to_screen/Cube[i + Size * (j + Size * k)].z+width/2;
             new_y = Cube[i + Size * (j + Size * k)].y*dist_to_screen/Cube[i + Size * (j + Size * k)].z+width/2;
             //Cube_Perspective[i][j][k].set_pos(new_x, new_y, 0, Cube[i + Size * (j + Size * k)].cor);
-            Cube_Perspective[i + Size * (j + Size * k)].set_pos(new_x, new_y, 0, Cube[i + Size * (j + Size * k)].cor);
+            //Cube_Perspective[i + Size * (j + Size * k)].set_pos(new_x, new_y, 0, Cube[i + Size * (j + Size * k)].cor);
+			Cube_Perspective[i + Size * (j + Size * k)].x = new_x;
+			Cube_Perspective[i + Size * (j + Size * k)].y = new_y;
+			Cube_Perspective[i + Size * (j + Size * k)].z = 0;
+			Cube_Perspective[i + Size * (j + Size * k)].cor = Cube[i + Size * (j + Size * k)].cor;
          //}
       }
    //}
@@ -262,7 +266,7 @@ int main(void)
 	
 	int Size = 100;
 	int width = 2000;
-	int OffSet = 3000;
+	//int OffSet = 3000;
 	int frames = 1;
 	double spacing_factor = 40;
 
