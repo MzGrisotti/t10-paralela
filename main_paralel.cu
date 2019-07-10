@@ -88,9 +88,7 @@ __global__ void render(Cube_Unity *Cube, Cube_Unity *Cube_Perspective){
 int main(void)
 {
 
-	// start time
-	timeval start, end;
-	gettimeofday(&start, NULL);
+	
 
 	Cube_Unity *Cube;
 	Cube_Unity *Cube_Perspective;
@@ -138,6 +136,10 @@ int main(void)
 
 	max_threads = 1000;
 	max_blocks = Size;
+	
+// start time
+	timeval start, end;
+	gettimeofday(&start, NULL);
 	
    for(int frame = 0; frame < frames; frame++){
 	  render<<<max_blocks, max_threads>>>(Cube, Cube_Perspective);
